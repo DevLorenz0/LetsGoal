@@ -1,0 +1,21 @@
+{% extends "base.html" %} 
+{% block title %}Log In{% endblock %}
+{% block content %}
+    <div class="full-bg" id="cog-1">
+        <form class="log-form" method="POST">
+            {{form.hidden_tag()}}
+            <h2>Log In</h2>
+            <div class="form-label">Username or Email</div>
+            <div class="form-control">{{form.ue()}}</div>
+            <div class="form-label">Password</div>
+            <div class="form-control">{{form.password()}}</div>
+            <div class="form-submit">{{form.submit()}}</div>
+            <hr>
+            <p>Don't have an account? <a href="/signup" class="hl" style="color:rgb(0,50,100)">sign up</a></p>
+        </form>
+    </div>
+    <!--Don't worry about IF statements and For loops.  I'll take care of those.-->
+    {% if error %}
+        <div class="error"><i class="fas fa-exclamation-circle" style="margin-right:10px;"></i>{{error}}</div>
+    {% endif %} 
+{% endblock %}

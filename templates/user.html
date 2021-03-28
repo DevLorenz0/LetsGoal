@@ -1,0 +1,72 @@
+{% extends "base.html" %} 
+{% block title %}Dashboard{% endblock %}
+{% block head %}
+<style>
+            body, html {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image:url(https://images.unsplash.com/photo-1557683325-3ba8f0df79de?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTR8fGdyYWRpZW50fGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60);
+                overflow-y:auto;
+            }
+            .comment-col-r > h4 > i{
+                margin-left: 20px;
+            }
+        </style>
+{% endblock %}
+{% block content %}
+    <div id="left-col">
+            {% if bms %}
+            <div class="glass-window">
+                <h2>Bookmarked Posts</h2>
+                {% for bm in bms %}
+                <div class="comment post" style="margin: 10px 10%;">
+                    <div class="comment-col-l">
+                        <a href="/user/{{bm.author}}"><img class="comment-avatar" src="{{bm.author_avatar}}"></a>                    </div>
+                    <div class="comment-col-r">
+                        <h3 style="text-align:left;margin-top:15px;">{{bm.author}}<br>made on {{bm.made}}</h3>
+                        <h2 style="text-align:left;font-family:'Montserrat', sans-serif;"><a href="/post/{{bm.id}}">{{bm.title}}</a></h2>
+                        <h4 style="text-align:left;font-family:'Montserrat', sans-serif;"><i class="fas fa-comment"></i> {{bm.comments}} <i class="fas fa-heart"></i> {{bm.likes}} <i class="fas fa-tag"></i> {{bm.topic}} <i class="fas fa-comment-dollar"></i> ${{bm.budget}}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if posts %}
+            <div class="glass-window">
+                <h2>Your Posts</h2>
+                {% for post in posts %}
+                <div class="comment post" style="margin: 10px 10%;">
+                    <div class="comment-col-l">
+                        <a href="/user/{{post.author}}"><img class="comment-avatar" src="{{post.author_avatar}}"></a>                    </div>
+                    <div class="comment-col-r">
+                        <h3 style="text-align:left;margin-top:15px;">{{post.author}}<br>made on {{post.made}}</h3>
+                        <h2 style="text-align:left;font-family:'Montserrat', sans-serif;"><a href="/post/{{post.id}}">{{post.title}}</a></h2>
+                        <h4 style="text-align:left;font-family:'Montserrat', sans-serif;"><i class="fas fa-comment"></i> {{post.comments}} <i class="fas fa-heart"></i> {{post.likes}} <i class="fas fa-tag"></i> {{post.topic}} <i class="fas fa-comment-dollar"></i> ${{post.budget}}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+            {% endif %}
+
+            {% if not posts and not bms %}
+            <div class="glass-window" style="max-width:600px;">
+                <h1>Welcome, {{user.username}}!</h1>
+                <p>Why don't you go explore the community, Introduce yourself, or <a href="/new">create a post</a></p>
+                <a href="/browse"><button class="form-submit-btn"><i class="fas fa-eye"></i> • Browse</button></a>
+                <a href="/settings"><button class="form-submit-btn"><i class="fas fa-cog"></i> • Settings</button></a>
+                <a href="/new"><button class="form-submit-btn"><i class="fas fa-lightbulb"></i> • Create</button></a>
+            </div>
+            {% endif %}
+        </div>
+        <div id="right-col">
+            <div id="user-card">
+            <img id="user-avatar" src="{{user.avatar}}">
+            <h3>{{user.username}}</h3>
+            <p>{{user.bio}}</p>
+            <a href="/settings"><button class="form-submit-btn"><i class="fas fa-cog"></i>Settings</button></a>
+        </div>
+        </div>
+{% endblock %}

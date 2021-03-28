@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style13.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poiret+One&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5434134134.js" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %} | [Website Name]</title>
+    <style>
+            .loader {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -100px;
+  margin-top: -100px;
+  border-radius: 50%;
+}
+            #loader > h1 {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+#loader1 {
+  border-left: solid rgba(0, 0, 0, 0.2) 10px;
+  animation: spin 2s infinite ease;
+}
+#loader2 {
+  border-left: solid rgba(0, 0, 0, 0.2) 10px;
+  animation: spin 2s infinite linear;
+}
+#loader3 {
+  border-left: solid rgba(0, 0, 0, 0.2) 10px;
+  animation: spin 2s infinite ease-in;
+}
+#loader4 {
+  border-left: solid rgba(0, 0, 0, 0.2) 10px;
+  animation: spin 2s infinite ease-out;
+}
+#loader5 {
+  border-left: solid rgba(0, 0, 0, 0.2) 10px;
+  animation: spin 2s infinite ease-in-out;
+}
+#loader {
+  z-index: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(https://images.unsplash.com/photo-1557683311-eac922347aa1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjB8fGdyYWRpZW50fGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+        </style>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <!--All the body content will be added here-->
+    <div style="margin-top:90px;">
+    {% block content %} {% endblock %}
+    </div>
+
+    <nav id="navbar">
+        {% if not request.cookies.get('devSession') and not request.cookies.get('remember_token') %}
+		<a href="/">
+			<div id="nav-home" class="nav-link" style="background: rgb(50, 225, 100);box-shadow: 0 3px 0 0 rgb(25, 200, 75);">
+				<i class="fas fa-home"></i>
+                <div class="hide-desc" id="hd-h">Home</div>
+            </div></a>
+        <a href="/about">
+            <div id="nav-about" class="nav-link" style="background: rgb(225, 50, 100);box-shadow: 0 3px 0 0 rgb(200,25,75);">
+                <i class="fas fa-info-circle"></i>
+                <div class="hide-desc" id="hd-a">About</div>
+            </div>
+            </a>
+        <a href="/browse"><div id="nav-browse" class="nav-link" style="background: rgb(255, 175, 0);box-shadow: 0 3px 0 0 rgb(200,125,0);"><i class="fas fa-eye"></i>
+        <div class="hide-desc" id="hd-d">Discover</div></div></a>
+        <a href="/login"><div id="nav-login" class="nav-link" style="background: rgb(0, 175, 225);box-shadow: 0 3px 0 0 rgb(0, 125, 175);"><i class="fas fa-sign-in-alt"></i>
+        <div class="hide-desc" id="hd-l">Log In</div></div></a>
+        <a href="/signup"><div id="nav-signup" class="nav-link" style="background: rgb(255, 125, 0);box-shadow: 0 3px 0 0 rgb(225, 100, 0);"><i class="fas fa-user-plus"></i>
+        <div class="hide-desc" id="hd-s">Sign Up</div></div></a>
+        
+        {% else %}
+        <a href="/user/{{request.cookies.get('devSession')}}">
+			<div id="nav-home" class="nav-link" style="background: rgb(50, 225, 100);box-shadow: 0 3px 0 0 rgb(25, 200, 75);">
+				<i class="fas fa-home"></i>
+                <div class="hide-desc" id="hd-h">Dashboard</div>
+            </div></a>
+        <a href="/new">
+            <div id="nav-about" class="nav-link" style="background: rgb(225, 50, 100);box-shadow: 0 3px 0 0 rgb(200,25,75);">
+                <i class="fas fa-plus"></i><i class="fas fa-lightbulb" style="margin-left:5px;"></i>
+                <div class="hide-desc" id="hd-a">Create</div>
+            </div>
+            </a>
+        <a href="/browse"><div id="nav-browse" class="nav-link" style="background: rgb(255, 175, 0);box-shadow: 0 3px 0 0 rgb(200,125,0);"><i class="fas fa-eye"></i>
+        <div class="hide-desc" id="hd-d">Browse</div></div></a>
+        <a href="/settings"><div id="nav-login" class="nav-link" style="background: rgb(0, 175, 225);box-shadow: 0 3px 0 0 rgb(0, 125, 175);"><i class="fas fa-cog"></i>
+        <div class="hide-desc" id="hd-l">Settings</div></div></a>
+        <a href="/logout"><div id="nav-signup" class="nav-link" style="background: rgb(255, 125, 0);box-shadow: 0 3px 0 0 rgb(225, 100, 0);"><i class="fas fa-sign-out-alt"></i>
+        <div class="hide-desc" id="hd-s">Log Out</div></div></a>
+
+        {% if logged_in.has_new %}
+        <a href="/notifications"><div id="notif-tab">
+            <i class="fas fa-bell"></i>
+        </div>
+        <div id="notif-circle"></div></a>
+        {% endif %}
+        
+        {% endif %}
+        
+
+        
+        
+        
+        
+    </nav>
+
+    <div id="loader">
+    <div id="loader1" class="loader"></div>
+    <div id="loader2" class="loader"></div>
+    <div id="loader3" class="loader"></div>
+    <div id="loader4" class="loader"></div>
+    <div id="loader5" class="loader"></div>
+    <h1>Loading...</h1>
+  </div>
+
+  <script>
+      window.addEventListener("load", function(){
+          document.querySelector("#loader").style.display = "none";
+      })
+  </script>
+</body>
+</html>
+
+
+<!--Base.html is the base template of all the other templates.
+    I'll explain how to use the Jinja template.  It's really easy.-->

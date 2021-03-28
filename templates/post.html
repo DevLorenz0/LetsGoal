@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}{{post.title}}{% endblock %}
+{% block head %}
+<style>
+            body, html {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image:url(https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhZGllbnR8ZW58MHx8MHw%3D&auto=format&fit=crop&w=600&q=60);
+            }
+            @media(min-width: 601px){
+            body, html{
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                overflow:hidden;
+            }
+            }
+            .lk-btn:disabled:hover{
+                cursor:not-allowed;
+            }
+            .comment > .comment-col-r > p{
+                padding: 0 5% 0 0;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.1/marked.min.js"></script>
+{% endblock %}
+{% block content %}
+        <div id="right-col">
+                {% if request.cookies.get('devSession') and request.cookies.get('remember_token') %}
+                <div id="lstat-box">
+                    <form action="/like/{{post.id}}" method="POST" id="like-form">
+                        <button type="submit" class="lk-btn" id="lk-btn" {% if has_liked_post %}disabled{% endif %}>Support • <i class="fas fa-heart"></i></button> <span id="post-likes">{{post.likes}}</span>
+                    </form>
+                    <form action="/bookmark/{{post.id}}" method="POST" id="bm-form">
+                        <button type="submit" class="lk-btn" id="bm-btn" {% if has_liked_post %}disabled{% endif %}>Become a Fan • <i class="fas fa-bookmark"></i></button> <span id="post-bookmarks">{{post.bookmarks}}</span>
+                    </form>
+                    <a href="https://twitter.com/intent/tweet?hashtags=ONU,equity,&related=equity&text=Make%20this%20Idea%20to%20Help%20the%20World%20become%20a%20Reality.%20%20https://IdeaSiteEntry.devunited.repl.co/post/{{post.id}}" target="_blank"><button type="submit" class="lk-btn">Tweet [F] • <i class="fab fa-twitter"></i></button></a>
+                    <div style="margin-left:10px;"><b>Started On {{post.made}}</b></div>
+                    {% if logged_in.id == author.id %}
+                    <form action="/change-status/{{post.id}}" class="glass-window" id="status-form" method="POST">
+                        <h2>Status</h2>
+                        <div class="form-label" style="font-size:12px;">*The status of your idea indicates what stage it's in</div>
+                        <select class="form-submit-btn" style="margin-top:10px;margin-bottom:10px;" name="options" id="status-pick">
+                            <option value="just_started" {% if post.status == "just_started" %}selected{% endif %}>Just Started</option>
+                            <option value="in_progress" {% if post.status == "in_progress" %}selected{% endif %}>In Progress</option>
+                            <option value="searching_for_a_sponsor" {% if post.status == "searching_for_a_sponsor" %}selected{% endif %}>Searching for a Sponsor</option>
+                            <option value="waiting_for_members" {% if post.status == "waiting_for_members" %}selected{% endif %}>Waiting for Members</option>
+                            <option value="waiting_for_funds"{% if post.status == "waiting_for_funds" %}selected{% endif %}>Waiting for Funds</option>
+                            <option value="finished" {% if post.status == "finished" %}selected{% endif %}>Finished</option>
+                            <option value="canceled" {% if post.status == "canceled" %}selected{% endif %}>Canceled</option>
+                        </select>
+                        <div class="form-submit">
+                            <input style="margin-top:10px;margin-bottom:10px;" type="submit" value="Change Status">
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div id="user-card">
+            <img id="user-avatar" src="{{author.avatar}}">
+            <h3>{{author.username}}</h3>
+            <p>{{author.bio}}</p>
+            <a href="/user/{{author.username}}"><button class="form-submit-btn">Visit Profile</button></a>
+            <button class="form-submit-btn">Follow</button>
+        </div>
+            </div>
+        <div id="left-col">
+                <div id="post-parent">
+            <h1>{{post.title}}</h1>
+            <div class="glass-window">
+                <p>{{post.cont}}</p>
+            </div>
+            <h2>Goal(s)</h2>
+            <div class="glass-window">
+                <p>{{post.goals}}</p>
+            </div>
+            <h2>What's Needed</h2>
+            <div class="glass-window">
+                <p>{{post.need_list}}</p>
+            </div>
+            <div class="glass-window" id="sp">
+                <p>Budget: ${{post.budget}}<br>{% if post.status == "searching_for_a_sponsor" %}I'm searching for a Sponsor.  If you want to help, contact me at {% else %} Contact me:{% endif%} {{post.contact}}</p>
+            </div>
+        </div>
+        <div id="comment-section" style="margin-top: 40px;">
+            <form method="POST" action="/comment/{{post.id}}" id="comment-form">
+                <div class="form-control">
+                    <textArea name="text" placeholder="Write a comment..." id="ctext"></textArea>
+                </div>
+                <div class="form-submit">
+                    <input type="submit" value="Post">
+                </div>
+            </form>
+
+            <div id="comment-list" style="margin-bottom:50px">
+                {% for comment in comments %}
+                <div class="comment" style="margin: 10px 10%;">
+                    <div class="comment-col-l">
+                        <a href="/user/{{comment.author}}"><img class="comment-avatar" src="{{comment.author_avatar}}"></a>                    </div>
+                    <div class="comment-col-r">
+                        <h3 style="text-align:left;">{{comment.author}}</h3>
+                        <p class="comment-text">{{comment.text}}</p>
+                        <a href="/thread/{{comment.id}}"><i class="fas fa-reply"></i>Reply</a> | <em>{{comment.replies}} Replies</em>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <script>
+            const $ = (prop) => document.querySelector(prop);
+            const $$ = (prop) => document.querySelectorAll(prop);
+            let wds = $$(".glass-window > p");
+            for(let i = 0; i < wds.length; i++){
+                let wd = wds[i];
+                wd.innerHTML = marked(wd.innerHTML);
+            }
+            $("#comment-form").addEventListener("submit", function(e){
+                const form = new FormData($("#comment-form"));
+                e.preventDefault()
+                fetch('/comment/{{post.id}}', {
+                    method: 'POST',
+                    body: form
+                }).then(() => {
+                    $("#comment-list").innerHTML += `<div class="comment" style="margin: 10px 10%;">
+                    <div class="comment-col-l">
+                        <a href="/user/{{request.cookies.get('devSession')}}"><img class="comment-avatar" src="{{author.avatar}}"></a>                    </div>
+                    <div class="comment-col-r">
+                        <h3 style="text-align:left;">{{logged_in.username}}</h3>
+                        <p class="comment-text">${$("#ctext").value}</p>
+                        <a href="#"><i class="fas fa-reply"></i>Reply</a> | <em>0 Replies</em>
+                    </div>
+                </div>`;
+                $("#ctext").value = "";
+                });
+            })
+
+            $("#status-form").addEventListener("submit", function(e){
+                const form = new FormData($("#status-form"));
+                e.preventDefault()
+                fetch('/change-status/{{post.id}}', {
+                    method: 'POST',
+                    body: form
+                }).then(() => {
+                    if($("#status-pick").value == "searching_for_a_sponsor"){
+                        $("#sp").innerHTML = `
+                        <p>Budget: \${{budget}}<br>I'm searching for a sponsor.  If you want to help, contact me at {{post.contact}}</p>
+                        `;
+                    } else{
+                        $("#sp").innerHTML = `
+                        <p>Budget: \${{budget}}<br>Contact Me: {{post.contact}}</p>
+                        `;
+                    }
+                })
+            })
+
+            $("#like-form").addEventListener("submit", function(e){
+                e.preventDefault()
+                fetch('/like/{{post.id}}', {
+                    method: 'POST',
+                }).then(() => {
+                    let lks = $("#post-likes").innerHTML;
+                    $("#post-likes").innerHTML = parseInt(lks)+1;
+                    $("#lk-btn").disabled = true;
+                })
+            })
+
+            $("#bm-form").addEventListener("submit", function(e){
+                e.preventDefault()
+                fetch('/bm/{{post.id}}', {
+                    method: 'POST',
+                }).then(() => {
+                    let lks = $("#post-bookmarks").innerHTML;
+                    $("#post-bookmarks").innerHTML = parseInt(lks)+1;
+                    $("#bm-btn").disabled = true;
+                })
+            })
+            
+        </script>
+{% endblock %}

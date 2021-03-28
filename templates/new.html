@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block head%}
+<style>
+    body, html {
+        background-image:url(https://images.unsplash.com/photo-1615716272071-c588ae57f050?ixid=MXwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8N3x8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60);
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+{% endblock %}
+{% block title %}New Idea{% endblock %}
+{% block content %}
+<form action="/postidea" method="POST" class="glass-window" style="max-width:800px !important;border-radius:20px;">
+	<h2>Start a Project</h2>
+	<div class="form-label">Title</div>
+	<div class="form-control"><input placeholder="e.g. Cleaning 100 Beaches in the USA" name="title"></div>
+            <div class="form-label">Your Amazing Idea</div>
+            <div class="form-control"><textArea placeholder="How will you help the world?" name="idea"></textArea></div>
+            <div class="form-label">Goals</div>
+            <div class="form-control"><textArea placeholder="What's next for your idea? What are the project final goals? Try using concrete numbers." name="goals"></textArea></div>
+            <div class="form-label">Things Needed</div>
+            <div class="form-label" style="font-size:12px;">*Markdown supported</div>
+            <div class="form-control"><textArea placeholder="What do you need to make your idea become true? Explain in two or three lines what you want to achieve with your project. A concrete list of what you need." name="need-list"></textArea></div>
+            <div class="form-label">Budget Required (optional)</div>
+            <div class="form-control"><input placeholder="How much money do you need?" type="number" name="budget"></div>
+            <div class="form-label">Topic</div>
+                <select class="form-submit-btn" style="width:auto;font-size:15px;margin-left:10%;transform:none;" id="topic-selector" name="topic">
+                    <option value="nopoverty">Reduce the Poverty</option>
+                    <option value="zerohunger">Decrease Hunger</option>
+                    <option value="goodhealth">Empower Health</option>
+                    <option value="qualityeducation">Quality Education</option>
+                    <option value="genderequality">Gender Equality</option>
+                    <option value="cleanwater">Clean Water & Sanitation</option>
+                    <option value="affordableand">Affordable & Clean Energy</option>
+                    <option value="decentwork">Decent Work & Economic Growth</option>
+                    <option value="industryinnovation">Industry, Innovation, Infrastructure</option>
+                    <option value="reducedinequalities">Reduced Inequalities</option>
+                    <option value="sustainablecities">Sustainable Cities & Communities</option>
+                    <option value="responsibleconsumtion">Responsible Consumption & Production</option>
+                    <option value="climateaction">Climate Action</option>
+                    <option value="lifebelow">Life Below Water</option>
+                    <option value="lifeon">Life On Land</option>
+                    <option value="peacejustice">Peace, Justice, & Strong Institutions</option>
+                    <option value="partnershipsfor">Partnerships for the Goals</option>
+                    <option value="other">Other</option>
+                </select>
+            <div class="form-label">Your Contact</div>
+            <div class="form-control"><input placeholder="e.g. johndoe@gmail.com" name="contact"></div>
+            <div class="form-submit"><input type="submit" value="Change the World"></div>
+        </form>
+        {% endblock %}
