@@ -20,8 +20,11 @@ Built With #javascript, #html, #css, #sql, #sqlite, #python, #flask
 
 #### Links:
 Presentation: https://docs.google.com/presentation/d/1GgYKkaBDwpMgMIW59Lra1EExp8iOjtmTKrvyLgDtUDI/edit?usp=sharing
+
 Website: 
+
 Originally presented for an hackathon on DevPost: https://devpost.com/software/let-s-goal?ref_content=user-portfolio&ref_feature=in_progress
+
 Product Hunt: https://www.producthunt.com/posts/let-s-goal
 
 Thanks for reading!
