@@ -1,8 +1,6 @@
 # **Let's Goal**
 *Volunteer and help to change the world*
 
-Video if possible or logo
-
 ---
 
 ### Inspiration
@@ -70,7 +68,7 @@ Built With #javascript, #html, #css, #sql, #sqlite, #python, #flask
 
 #### Links:
 Presentation: https://docs.google.com/presentation/d/1GgYKkaBDwpMgMIW59Lra1EExp8iOjtmTKrvyLgDtUDI/edit?usp=sharing
-Website: ideasiteentry.devunited.repl.co
+Website: 
 DevPost: https://devpost.com/software/let-s-goal?ref_content=user-portfolio&ref_feature=in_progress
 
 Thanks for reading!
