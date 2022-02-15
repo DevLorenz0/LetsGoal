@@ -1,5 +1,0 @@
- - Dashboard Approx 1.5hrs
- - Settings Page Approx 45mins
- - Loading Screen Approx 7.5mins
- - Fix Tweet Href on deploy
- - Post edits
